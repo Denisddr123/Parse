@@ -1,0 +1,530 @@
+import org.apache.poi.ooxml.POIXMLTypeLoader;
+import org.apache.poi.xwpf.usermodel.XWPFAbstractNum;
+import org.apache.poi.xwpf.usermodel.XWPFNum;
+import org.apache.poi.xwpf.usermodel.XWPFNumbering;
+import org.apache.xmlbeans.XmlException;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.math.BigInteger;
+
+public class Numbering {
+
+    Numbering(XWPFNumbering xwpfNumbering, String fileName) throws IOException, XmlException {
+        File file = new File(fileName);
+        FileInputStream fileInputStream = new FileInputStream(file);
+        NumberingDocument numberingDoc = NumberingDocument.Factory.parse(fileInputStream, POIXMLTypeLoader.DEFAULT_XML_OPTIONS);
+        fileInputStream.close();
+        CTNumbering ctNumbering = numberingDoc.getNumbering();
+
+        CTNum[] var = ctNumbering.getNumArray();
+
+        for (CTNum ctNum : var) {
+            xwpfNumbering.addNum(new XWPFNum(ctNum, xwpfNumbering));
+        }
+
+        CTAbstractNum[] var2 = ctNumbering.getAbstractNumArray();
+        for (CTAbstractNum ctAbstractNum : var2) {
+            xwpfNumbering.addAbstractNum(new XWPFAbstractNum(ctAbstractNum, xwpfNumbering));
+        }
+        addNumber(xwpfNumbering);
+        addNumLowerLetter(xwpfNumbering);
+    }
+
+    private void addNumber(XWPFNumbering xwpfNumbering) {
+        int size = xwpfNumbering.getAbstractNums().size();
+        CTAbstractNum cTAbstractNum = CTAbstractNum.Factory.newInstance();
+        cTAbstractNum.setAbstractNumId(BigInteger.valueOf(size+1));
+        CTLvl ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(0));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("decimal"));
+        ctLvl.addNewSuff().setVal(STLevelSuffix.Enum.forString("space"));
+        ctLvl.addNewLvlText().setVal("%1)");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        CTPPrGeneral ctpPrGeneral = ctLvl.addNewPPr();
+        CTTabStop ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(0);
+        CTInd ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(1083);
+        ctInd.setHanging(363);
+        CTRPr ctrPr = ctLvl.addNewRPr();
+        ctrPr.addNewSz().setVal(32);
+        ctrPr.addNewSzCs().setVal(32);
+        CTFonts ctFonts = ctrPr.addNewRFonts();
+        ctFonts.setAscii("Times New Roman");
+        ctFonts.setHAnsi("Times New Roman");
+
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(1));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("decimal"));
+        ctLvl.addNewSuff().setVal(STLevelSuffix.Enum.forString("space"));
+        ctLvl.addNewLvlText().setVal("%2)");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(0);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(1440);
+        ctInd.setHanging(357);
+        ctrPr = ctLvl.addNewRPr();
+        ctrPr.addNewSz().setVal(32);
+        ctrPr.addNewSzCs().setVal(32);
+        ctFonts = ctrPr.addNewRFonts();
+        ctFonts.setAscii("Times New Roman");
+        ctFonts.setHAnsi("Times New Roman");
+
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(2));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("decimal"));
+        ctLvl.addNewSuff().setVal(STLevelSuffix.Enum.forString("space"));
+        ctLvl.addNewLvlText().setVal("%3)");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(0);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(1797);
+        ctInd.setHanging(357);
+        ctrPr = ctLvl.addNewRPr();
+        ctrPr.addNewSz().setVal(32);
+        ctrPr.addNewSzCs().setVal(32);
+        ctFonts = ctrPr.addNewRFonts();
+        ctFonts.setAscii("Times New Roman");
+        ctFonts.setHAnsi("Times New Roman");
+
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(3));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("decimal"));
+        ctLvl.addNewSuff().setVal(STLevelSuffix.Enum.forString("space"));
+        ctLvl.addNewLvlText().setVal("%4)");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(0);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(2160);
+        ctInd.setHanging(363);
+        ctrPr = ctLvl.addNewRPr();
+        ctrPr.addNewSz().setVal(32);
+        ctrPr.addNewSzCs().setVal(32);
+        ctFonts = ctrPr.addNewRFonts();
+        ctFonts.setAscii("Times New Roman");
+        ctFonts.setHAnsi("Times New Roman");
+
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(4));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("decimal"));
+        ctLvl.addNewSuff().setVal(STLevelSuffix.Enum.forString("space"));
+        ctLvl.addNewLvlText().setVal("%5)");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(0);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(2523);
+        ctInd.setHanging(363);
+        ctrPr = ctLvl.addNewRPr();
+        ctrPr.addNewSz().setVal(32);
+        ctrPr.addNewSzCs().setVal(32);
+        ctFonts = ctrPr.addNewRFonts();
+        ctFonts.setAscii("Times New Roman");
+        ctFonts.setHAnsi("Times New Roman");
+
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(5));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("decimal"));
+        ctLvl.addNewSuff().setVal(STLevelSuffix.Enum.forString("space"));
+        ctLvl.addNewLvlText().setVal("%6)");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(0);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(2886);
+        ctInd.setHanging(363);
+        ctrPr = ctLvl.addNewRPr();
+        ctrPr.addNewSz().setVal(32);
+        ctrPr.addNewSzCs().setVal(32);
+        ctFonts = ctrPr.addNewRFonts();
+        ctFonts.setAscii("Times New Roman");
+        ctFonts.setHAnsi("Times New Roman");
+
+        XWPFAbstractNum xwpfAbstractNum = new XWPFAbstractNum(cTAbstractNum);
+
+        BigInteger bigInteger = xwpfNumbering.addAbstractNum(xwpfAbstractNum);
+        xwpfNumbering.addNum(bigInteger);
+    }
+
+    private void addNumLowerLetter(XWPFNumbering xwpfNumbering) {
+        int size = xwpfNumbering.getAbstractNums().size();
+        CTAbstractNum cTAbstractNum = CTAbstractNum.Factory.newInstance();
+        cTAbstractNum.setAbstractNumId(BigInteger.valueOf(size+1));
+        CTLvl ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(0));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("none"));
+        ctLvl.addNewSuff().setVal(STLevelSuffix.Enum.forString("nothing"));
+        ctLvl.addNewLvlText().setVal("");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        CTPPrGeneral ctpPrGeneral = ctLvl.addNewPPr();
+        CTTabStop ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(0);
+        CTInd ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(0);
+        ctInd.setHanging(0);
+
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(1));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("none"));
+        ctLvl.addNewSuff().setVal(STLevelSuffix.Enum.forString("nothing"));
+        ctLvl.addNewLvlText().setVal("");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(0);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(0);
+        ctInd.setHanging(0);
+
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(2));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("none"));
+        ctLvl.addNewSuff().setVal(STLevelSuffix.Enum.forString("nothing"));
+        ctLvl.addNewLvlText().setVal("");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(0);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(0);
+        ctInd.setHanging(0);
+
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(3));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("none"));
+        ctLvl.addNewSuff().setVal(STLevelSuffix.Enum.forString("nothing"));
+        ctLvl.addNewLvlText().setVal("");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(0);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(0);
+        ctInd.setHanging(0);
+
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(4));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("none"));
+        ctLvl.addNewSuff().setVal(STLevelSuffix.Enum.forString("nothing"));
+        ctLvl.addNewLvlText().setVal("");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(0);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(0);
+        ctInd.setHanging(0);
+
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(5));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("none"));
+        ctLvl.addNewSuff().setVal(STLevelSuffix.Enum.forString("nothing"));
+        ctLvl.addNewLvlText().setVal("");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(0);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(0);
+        ctInd.setHanging(0);
+
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(6));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("none"));
+        ctLvl.addNewSuff().setVal(STLevelSuffix.Enum.forString("nothing"));
+        ctLvl.addNewLvlText().setVal("");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(0);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(0);
+        ctInd.setHanging(0);
+
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(7));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("none"));
+        ctLvl.addNewSuff().setVal(STLevelSuffix.Enum.forString("nothing"));
+        ctLvl.addNewLvlText().setVal("");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(0);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(0);
+        ctInd.setHanging(0);
+
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(8));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("none"));
+        ctLvl.addNewSuff().setVal(STLevelSuffix.Enum.forString("nothing"));
+        ctLvl.addNewLvlText().setVal("");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(0);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(0);
+        ctInd.setHanging(0);
+
+
+        XWPFAbstractNum xwpfAbstractNum = new XWPFAbstractNum(cTAbstractNum);
+
+        BigInteger bigInteger = xwpfNumbering.addAbstractNum(xwpfAbstractNum);
+        xwpfNumbering.addNum(bigInteger);
+
+        size = xwpfNumbering.getAbstractNums().size();
+        cTAbstractNum = CTAbstractNum.Factory.newInstance();
+        cTAbstractNum.setAbstractNumId(BigInteger.valueOf(size+1));
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(0));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("lowerLetter"));
+        ctLvl.addNewLvlText().setVal("%1.");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(754);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(754);
+        ctInd.setHanging(397);
+        CTRPr ctrPr = ctLvl.addNewRPr();
+        ctrPr.addNewSz().setVal(32);
+        ctrPr.addNewSzCs().setVal(32);
+        CTFonts ctFonts = ctrPr.addNewRFonts();
+        ctFonts.setAscii("Times New Roman");
+        ctFonts.setHAnsi("Times New Roman");
+
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(1));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("lowerLetter"));
+        ctLvl.addNewLvlText().setVal("%2.");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(1151);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(1151);
+        ctInd.setHanging(397);
+        ctrPr = ctLvl.addNewRPr();
+        ctrPr.addNewSz().setVal(32);
+        ctrPr.addNewSzCs().setVal(32);
+        ctFonts = ctrPr.addNewRFonts();
+        ctFonts.setAscii("Times New Roman");
+        ctFonts.setHAnsi("Times New Roman");
+
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(2));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("lowerLetter"));
+        ctLvl.addNewLvlText().setVal("%3.");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(1548);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(1548);
+        ctInd.setHanging(397);
+        ctrPr = ctLvl.addNewRPr();
+        ctrPr.addNewSz().setVal(32);
+        ctrPr.addNewSzCs().setVal(32);
+        ctFonts = ctrPr.addNewRFonts();
+        ctFonts.setAscii("Times New Roman");
+        ctFonts.setHAnsi("Times New Roman");
+
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(3));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("lowerLetter"));
+        ctLvl.addNewLvlText().setVal("%4.");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(1945);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(1945);
+        ctInd.setHanging(397);
+        ctrPr = ctLvl.addNewRPr();
+        ctrPr.addNewSz().setVal(32);
+        ctrPr.addNewSzCs().setVal(32);
+        ctFonts = ctrPr.addNewRFonts();
+        ctFonts.setAscii("Times New Roman");
+        ctFonts.setHAnsi("Times New Roman");
+
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(4));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("lowerLetter"));
+        ctLvl.addNewLvlText().setVal("%5.");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(2342);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(2342);
+        ctInd.setHanging(397);
+        ctrPr = ctLvl.addNewRPr();
+        ctrPr.addNewSz().setVal(32);
+        ctrPr.addNewSzCs().setVal(32);
+        ctFonts = ctrPr.addNewRFonts();
+        ctFonts.setAscii("Times New Roman");
+        ctFonts.setHAnsi("Times New Roman");
+
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(5));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("lowerLetter"));
+        ctLvl.addNewLvlText().setVal("%6.");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(2739);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(2739);
+        ctInd.setHanging(397);
+        ctrPr = ctLvl.addNewRPr();
+        ctrPr.addNewSz().setVal(32);
+        ctrPr.addNewSzCs().setVal(32);
+        ctFonts = ctrPr.addNewRFonts();
+        ctFonts.setAscii("Times New Roman");
+        ctFonts.setHAnsi("Times New Roman");
+
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(6));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("lowerLetter"));
+        ctLvl.addNewLvlText().setVal("%7.");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(3136);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(3136);
+        ctInd.setHanging(397);
+        ctrPr = ctLvl.addNewRPr();
+        ctrPr.addNewSz().setVal(32);
+        ctrPr.addNewSzCs().setVal(32);
+        ctFonts = ctrPr.addNewRFonts();
+        ctFonts.setAscii("Times New Roman");
+        ctFonts.setHAnsi("Times New Roman");
+
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(7));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("lowerLetter"));
+        ctLvl.addNewLvlText().setVal("%8.");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(3533);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(3533);
+        ctInd.setHanging(397);
+        ctrPr = ctLvl.addNewRPr();
+        ctrPr.addNewSz().setVal(32);
+        ctrPr.addNewSzCs().setVal(32);
+        ctFonts = ctrPr.addNewRFonts();
+        ctFonts.setAscii("Times New Roman");
+        ctFonts.setHAnsi("Times New Roman");
+
+        ctLvl = cTAbstractNum.addNewLvl();
+        ctLvl.setIlvl(BigInteger.valueOf(8));
+        ctLvl.addNewStart().setVal(BigInteger.valueOf(1));
+        ctLvl.addNewPStyle().setVal(String.valueOf(1));
+        ctLvl.addNewNumFmt().setVal(STNumberFormat.Enum.forString("lowerLetter"));
+        ctLvl.addNewLvlText().setVal("%9.");
+        ctLvl.addNewLvlJc().setVal(STJc.Enum.forString("start"));
+        ctpPrGeneral = ctLvl.addNewPPr();
+        ctTabStop = ctpPrGeneral.addNewTabs().addNewTab();
+        ctTabStop.setVal(STTabJc.Enum.forString("num"));
+        ctTabStop.setPos(3930);
+        ctInd = ctpPrGeneral.addNewInd();
+        ctInd.setStart(3930);
+        ctInd.setHanging(397);
+        ctrPr = ctLvl.addNewRPr();
+        ctrPr.addNewSz().setVal(32);
+        ctrPr.addNewSzCs().setVal(32);
+        ctFonts = ctrPr.addNewRFonts();
+        ctFonts.setAscii("Times New Roman");
+        ctFonts.setHAnsi("Times New Roman");
+
+        xwpfAbstractNum = new XWPFAbstractNum(cTAbstractNum);
+
+        bigInteger = xwpfNumbering.addAbstractNum(xwpfAbstractNum);
+        xwpfNumbering.addNum(bigInteger);
+    }
+
+}

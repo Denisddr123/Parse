@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="javadoc">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/httpcomponents-client-5.1.3-bin/lib" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="file://$PROJECT_DIR$/httpcomponents-client-5.1.3-bin/javadoc" />
+    </JAVADOC>
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/httpcomponents-client-5.1.3-bin/lib" recursive="false" />
+  </library>
+</component>
